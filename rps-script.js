@@ -65,10 +65,9 @@ function game () {
     }
 }
 
-const gameButtons = querySelectorAll('game-button');
-    gameButtons.forEach((gameButton) => {
-        gameButton.addEventListener('click', () => {
+const btn = document.getElementsByClassName("game-button");
+    btn.forEach((b) => {
+        b.addEventListener ('click', (e) => {
             game();
         });
     });
-
