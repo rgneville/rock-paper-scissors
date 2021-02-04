@@ -16,11 +16,13 @@
         img {
         width: 200px;
         height: 200px;
-        padding-left: 40px;
-        padding-right: 40px;
-        border-top-width: 20px;
+        margin-left: 40px;
+        margin-right: 40px;
+        border-width: 2px;
+        border-style: solid;
         border-radius: 15%;
         border-color: black;
+        box-shadow: 0px 0px 2px 2px #000000;
         }
         
         #selections {
@@ -28,19 +30,28 @@
         justify-content: center;
         }
 
+        #scorebox {
+        margin-top: 25px;
+        }
 
+        #rounds-start-line {
+        display: flex;
+        justify-content: center;
+        }
 
     </style>
 
-    <h1 style="padding-bottom: 50px">Rock, Paper, Scissors</h1>
+    <h1 style="padding-bottom: 25px">Rock, Paper, Scissors</h1>
 
     <p>Who will win in this epic battle of man versus Math.random?</p>
 
-    
-    <form>
-        <label id="rounds">Number of rounds:</label>
-        <input type="text">
-    </form>
+    <div id="rounds-start-line">
+        <form>
+            <label>First to </label>
+            <input type="text" id="rounds" value="5" size="1">
+            <label> rounds wins! Choose your weapon wisely.</label>
+        </form>
+    </div>
 
     <div id='selections'>
         <img id="rock" class="game-button" src="https://www.pngitem.com/pimgs/m/30-304319_dwayne-johnson-clipart-dwayne-johnson-full-body-hd.png"></img>
@@ -49,10 +60,9 @@
     </div>
 
     <div id="scorebox">
-
+        <p></p>
     </div>
 
-    
     <script src="rps-script.js"></script>
 
 </body>

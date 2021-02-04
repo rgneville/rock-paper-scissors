@@ -1,3 +1,8 @@
+let computerScore = 0;
+let playerScore = 0;
+const numberOfRounds = parseInt(document.querySelector('#rounds').value);
+console.log(numberOfRounds);
+
 function computerPlay () {
     let chooser=Math.random();
         if (chooser < 0.33) {
@@ -11,63 +16,62 @@ function computerPlay () {
         }
     }
 
-function playerPlay () {
-    let choice = prompt("Choose 'Rock', 'Paper' or 'Scissors'");
-    return choice
-}
-
-function playRound (playerChoice, computerChoice) {
-    let playerSelection = playerChoice.toLowerCase();
-    if (playerSelection === computerChoice) {
-        return "It's a Tie!"
-    } else if (playerSelection === "rock" && computerChoice === "scissors") {
-        return "You win! Rock beats scissors."
-    } else if (playerSelection === "paper" && computerChoice === "rock") {
-        return "You win! Paper beats rock."
-    } else if (playerSelection === "scissors" && computerChoice === "paper") {
-        return "You win! Scissors beats paper."
-    } else if (playerSelection === "rock" && computerChoice === "paper") {
-        return "You lose! Paper beats rock."
-    } else if (playerSelection === "paper" && computerChoice === "scissors") {
-        return "You lose! Scissors beats paper."
-    } else if (playerSelection === "scissors" && computerChoice === "rock") {
-        return "You lose! Rock beats scissors."
-    } else {
-        return "Ah crap, it's all gone tits up..."
+function playRound (playerChoice) {
+    let playerSelection = playerChoice;
+    let computerSelection = computerPlay()
+    let result = "";
+    if (playerSelection === computerSelection) {
+        result = `It's a Tie! You have ${playerScore} points, Computer has ${computerScore} points`;
+    } else if (playerSelection === "rock" && computerSelection === "scissors") {
+        playerScore += 1;
+        result = `You win! Rock beats scissors. You have ${playerScore} points, Computer has ${computerScore} points`;
+    } else if (playerSelection === "paper" && computerSelection === "rock") {
+        playerScore += 1;
+        result = `You win! Paper beats rock. You have ${playerScore} points, Computer has ${computerScore} points`;
+    } else if (playerSelection === "scissors" && computerSelection === "paper") {
+        playerScore += 1;
+        result = `You win! Scissors beats paper. You have ${playerScore} points, Computer has ${computerScore} points`;
+    } else if (playerSelection === "rock" && computerSelection === "paper") {
+        computerScore += 1;
+        result = `You lose! Paper beats rock. You have ${playerScore} points, Computer has ${computerScore} points`;
+    } else if (playerSelection === "paper" && computerSelection === "scissors") {
+        computerScore += 1;
+        result = `You lose! Scissors beats paper. You have ${playerScore} points, Computer has ${computerScore} points`;
+    } else if (playerSelection === "scissors" && computerSelection === "rock") {
+        computerScore += 1;
+        result = `You lose! Rock beats scissors. You have ${playerScore} points, Computer has ${computerScore} points`;
     }
-}
-
-function game () {
-    let playerScore = 0;
-    let computerScore = 0;
-    let numberOfRounds = parseInt(prompt("How many rounds do you want to play?", "5"));
-    for (i = 0; i < numberOfRounds; i++) {
-        let playerChoice = playerPlay();
-        let computerChoice = computerPlay();
-        let result = playRound (playerChoice, computerChoice);
-        console.log(result);
-        result = result.slice(0, 8);
-        if (result === "You win!") {
-            playerScore ++;
-        } else if (result === "You lose") {
-            computerScore ++;
+    document.getElementById('scorebox').innerHTML = result;
+    if (computerScore === numberOfRounds || playerScore === numberOfRounds) {
+        if (playerScore > computerScore) {
+            result = "Congratulations, you've beat the evil computer!"
+        } else if (playerScore < computerScore) {
+            result = "Ah no, the evil computer won..."
+        } else if (playerScore === computerScore) {
+            result = "You escaped... this time..."
+        } else {
+            result = "Ah no, it's all gone wrong..."
         }
-        console.log(`You have ${playerScore} points, Computer has ${computerScore} points`);
+    if (computerScore > numberOfRounds || playerScore > numberOfRounds) {
+        result = "Reload page to play again."
     }
-    if (playerScore > computerScore) {
-        return console.log("Congratulations, you've beat the evil computer!")
-    } else if (playerScore < computerScore) {
-        return console.log("Ah no, the evil computer won...")
-    } else if (playerScore === computerScore) {
-        return console.log("You escaped... this time...")
-    } else {
-        return console.log("Ah no, it's all gone wrong...")
+    document.getElementById('scorebox').innerHTML = result;
     }
+    return
 }
 
-const btn = document.getElementsByClassName("game-button");
-    btn.forEach((b) => {
-        b.addEventListener ('click', (e) => {
-            game();
-        });
-    });
+const rockButton = document.querySelector("#rock");
+rockButton.addEventListener('click', (e) => {
+    playRound(rockButton.id);
+});
+
+const paperButton = document.querySelector("#paper");
+paperButton.addEventListener('click', (e) => {
+    playRound(paperButton.id);
+});
+
+const scissorsButton = document.querySelector("#scissors");
+scissorsButton.addEventListener('click', (e) => {
+    playRound(scissorsButton.id);
+});
+
